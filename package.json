@@ -21,6 +21,10 @@
   },
   "scripts": {
     "build": "tsc -p . && node scripts/copy-files.js",
+    "package:linux": "pkg ./package.json --targets latest-linux-x64 --compress brotli --output ./dist/bin/m365-cli-linux",
+    "package:alpine": "pkg ./package.json --targets latest-alpine-x64 --compress brotli --output ./dist/bin/m365-cli-alpine",
+    "package:macos": "pkg ./package.json --targets latest-macos-x64 --compress brotli --output ./dist/bin/m365-cli-macos",
+    "package:win": "pkg ./package.json --targets latest-win-x64 --compress brotli --output ./dist/bin/m365-cli-win.exe",
     "watch": "tsc -w -p .",
     "clean": "rimraf ./dist",
     "test": "npm run test:version && npm run lint && npm run test:cov",
@@ -269,6 +273,7 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "@vercel/ncc": "^0.36.1",
     "c8": "^7.14.0",
     "eslint": "^8.46.0",
     "eslint-config-standard": "^17.1.0",
@@ -278,8 +283,17 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "mocha": "^10.2.0",
+    "pkg": "^5.8.1",
     "rimraf": "^3.0.2",
     "sinon": "^15.2.0",
     "source-map-support": "^0.5.21"
+  },
+  "pkg": {
+    "scripts": [
+      "dist/**/*.js"
+    ],
+    "assets": [
+      "node_modules/open/xdg-open"
+    ]
   }
 }
